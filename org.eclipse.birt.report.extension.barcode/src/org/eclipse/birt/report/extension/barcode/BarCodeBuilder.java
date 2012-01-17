@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.birt.report.designer.ui.dialogs.ExpressionBuilder;
 import org.eclipse.birt.report.designer.ui.dialogs.ExpressionProvider;
 import org.eclipse.birt.report.designer.ui.extensions.ReportItemBuilderUI;
+import org.eclipse.birt.report.extension.barcode.util.BarCodeGenerator;
 import org.eclipse.birt.report.model.api.ExtendedItemHandle;
 import org.eclipse.birt.report.model.api.extension.IReportItem;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -39,29 +40,21 @@ import org.eclipse.swt.widgets.Text;
 /**
  * RotatedTextBuilder
  */
-public class BarCodeBuilder extends ReportItemBuilderUI
-{
+public class BarCodeBuilder extends ReportItemBuilderUI {
 
 	@Override
-	public int open( ExtendedItemHandle handle )
-	{
-		try
-		{
-			IReportItem item = handle.getReportItem( );
+	public int open(ExtendedItemHandle handle) {
+		try {
+			IReportItem item=handle.getReportItem();
 
-			if ( item instanceof BarCodeItem )
-			{
+			if (item instanceof BarCodeItem) {
 				// XXX change to RotatedTextEditor2 for expression support
-				BarCodeEditor editor = new BarCodeEditor2( Display.getCurrent( )
-						.getActiveShell( ),
-						(BarCodeItem) item );
+				BarCodeEditor editor=new BarCodeEditor2(Display.getCurrent().getActiveShell(), (BarCodeItem) item);
 
-				return editor.open( );
+				return editor.open();
 			}
-		}
-		catch ( Exception e )
-		{
-			e.printStackTrace( );
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return Window.CANCEL;
 	}
@@ -70,153 +63,137 @@ public class BarCodeBuilder extends ReportItemBuilderUI
 /**
  * RotatedTextEditor
  */
-class BarCodeEditor extends TrayDialog
-{
+class BarCodeEditor extends TrayDialog {
 
 	protected BarCodeItem barCodeItem;
 
 	protected Text barCode;
 	protected Combo barCodeType;
-	
-	private static final List<String> BAR_CODE_TYPES = Arrays.asList("Interleaved 2 of 5", "ITF-14", "Code 39", "Code 128", "Codabar", "UPC-A", "UPC-E", "EAN-13", "EAN-8", "POSTNET", "Royal Mail Customer Barcode", "USPS Intelligent Mail", "PDF417", "DataMatrix (square)", "DataMatrix (rectangular)");
 
-	protected BarCodeEditor( Shell shell, BarCodeItem barCodeItem )
-	{
-		super( shell );
+	private static final List<String> BAR_CODE_TYPES=Arrays.asList(BarCodeGenerator.INTERLEAVED, BarCodeGenerator.ITF_14, BarCodeGenerator.CODABAR,
+			BarCodeGenerator.CODE_39, BarCodeGenerator.CODE_128, BarCodeGenerator.UPC_A, BarCodeGenerator.UPC_E, BarCodeGenerator.EAN_13,
+			BarCodeGenerator.EAN_8, BarCodeGenerator.POSTNET, BarCodeGenerator.DATAMATRIX_SQUARE, BarCodeGenerator.DATAMATRIX_RECTANGULAR);
 
-		this.barCodeItem = barCodeItem;
+	protected BarCodeEditor(Shell shell, BarCodeItem barCodeItem) {
+		super(shell);
+
+		this.barCodeItem=barCodeItem;
 	}
 
 	@Override
-	protected void configureShell( Shell newShell )
-	{
-		super.configureShell( newShell );
+	protected void configureShell(Shell newShell) {
+		super.configureShell(newShell);
 
-		newShell.setText( "Barcode Builder" ); //$NON-NLS-1$
+		newShell.setText("Barcode Builder"); //$NON-NLS-1$
 	}
 
-	protected void createTextArea( Composite parent )
-	{
-		Label lb = new Label( parent, SWT.None );
-		lb.setText( "Barcode:" ); //$NON-NLS-1$
+	protected void createTextArea(Composite parent) {
+		Label lb=new Label(parent, SWT.None);
+		lb.setText("Barcode:"); //$NON-NLS-1$
 
-		barCode = new Text( parent, SWT.BORDER );
-		GridData gd = new GridData( GridData.FILL_HORIZONTAL );
-		gd.horizontalSpan = 2;
-		barCode.setLayoutData( gd );
+		barCode=new Text(parent, SWT.BORDER);
+		GridData gd=new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan=2;
+		barCode.setLayoutData(gd);
 	}
 
 	@Override
-	protected Control createDialogArea( Composite parent )
-	{
-		Composite composite = new Composite( parent, SWT.NONE );
-		GridLayout layout = new GridLayout( 3, false );
-		layout.marginHeight = convertVerticalDLUsToPixels( IDialogConstants.VERTICAL_MARGIN );
-		layout.marginWidth = convertHorizontalDLUsToPixels( IDialogConstants.HORIZONTAL_MARGIN );
-		layout.verticalSpacing = convertVerticalDLUsToPixels( IDialogConstants.VERTICAL_SPACING );
-		layout.horizontalSpacing = convertHorizontalDLUsToPixels( IDialogConstants.HORIZONTAL_SPACING );
-		composite.setLayout( layout );
-		composite.setLayoutData( new GridData( GridData.FILL_BOTH ) );
+	protected Control createDialogArea(Composite parent) {
+		Composite composite=new Composite(parent, SWT.NONE);
+		GridLayout layout=new GridLayout(3, false);
+		layout.marginHeight=convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_MARGIN);
+		layout.marginWidth=convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_MARGIN);
+		layout.verticalSpacing=convertVerticalDLUsToPixels(IDialogConstants.VERTICAL_SPACING);
+		layout.horizontalSpacing=convertHorizontalDLUsToPixels(IDialogConstants.HORIZONTAL_SPACING);
+		composite.setLayout(layout);
+		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		createTextArea( composite );
+		createTextArea(composite);
 
-		Label lb = new Label( composite, SWT.None );
-		lb.setText( "Barcode Type:" ); //$NON-NLS-1$
+		Label lb=new Label(composite, SWT.None);
+		lb.setText("Barcode Type:"); //$NON-NLS-1$
 
-		barCodeType = new Combo( composite, SWT.DROP_DOWN | SWT.BORDER );
+		barCodeType=new Combo(composite, SWT.DROP_DOWN | SWT.BORDER);
+		barCodeType.add("");
 		for (String bcType : BAR_CODE_TYPES) {
 			barCodeType.add(bcType);
 		}
-		barCodeType.add("");
-		GridData gd = new GridData( );
-		gd.widthHint = 20;
-		barCodeType.setLayoutData( gd );
+		GridData gd=new GridData();
+		gd.widthHint=100;
+		barCodeType.setLayoutData(gd);
 
-		applyDialogFont( composite );
+		applyDialogFont(composite);
 
-		initValues( );
+		initValues();
 
 		return composite;
 	}
 
-	private void initValues( )
-	{
-		barCode.setText( barCodeItem.getBarCode() );
-		barCodeType.setText(barCodeItem.getBarCodeType()  );
+	private void initValues() {
+		barCode.setText(barCodeItem.getBarCode());
+		barCodeType.setText(barCodeItem.getBarCodeType() != null ? barCodeItem.getBarCodeType() : "");
 	}
 
 	@Override
-	protected void okPressed( )
-	{
+	protected void okPressed() {
 
-		try
-		{
-			barCodeItem.setBarCode(  barCode.getText( ) );
-			barCodeItem.setBarCodeType( barCodeType.getText() );
-		}
-		catch ( Exception ex )
-		{
-			ex.printStackTrace( );
+		try {
+			barCodeItem.setBarCode(barCode.getText());
+			barCodeItem.setBarCodeType(barCodeType.getText());
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 
-		super.okPressed( );
+		super.okPressed();
 	}
 }
 
 /**
  * RotatedTextEditor2
  */
-class BarCodeEditor2 extends BarCodeEditor
-{
+class BarCodeEditor2 extends BarCodeEditor {
 
-	protected BarCodeEditor2( Shell shell, BarCodeItem barCodeItem )
-	{
-		super( shell, barCodeItem );
+	protected BarCodeEditor2(Shell shell, BarCodeItem barCodeItem) {
+		super(shell, barCodeItem);
 	}
 
 	@Override
-	protected void createTextArea( Composite parent )
-	{
-		Label lb = new Label( parent, SWT.None );
-		lb.setText( "Barcode:" ); //$NON-NLS-1$
+	protected void createTextArea(Composite parent) {
+		Label lb=new Label(parent, SWT.None);
+		lb.setText("Barcode:"); //$NON-NLS-1$
 
-		barCode = new Text( parent, SWT.BORDER );
-		GridData gd = new GridData( GridData.FILL_HORIZONTAL );
-		barCode.setLayoutData( gd );
+		barCode=new Text(parent, SWT.BORDER);
+		GridData gd=new GridData(GridData.FILL_HORIZONTAL);
+		barCode.setLayoutData(gd);
 
-		Button btnExp = new Button( parent, SWT.PUSH );
-		btnExp.setText( "..." ); //$NON-NLS-1$
-		btnExp.setToolTipText( "Invoke Expression Builder" ); //$NON-NLS-1$
+		Button btnExp=new Button(parent, SWT.PUSH);
+		btnExp.setText("..."); //$NON-NLS-1$
+		btnExp.setToolTipText("Invoke Expression Builder"); //$NON-NLS-1$
 
-		btnExp.addSelectionListener( new SelectionAdapter( ) {
+		btnExp.addSelectionListener(new SelectionAdapter() {
 
 			@Override
-			public void widgetSelected( SelectionEvent event )
-			{
-				openExpression( barCode );
+			public void widgetSelected(SelectionEvent event) {
+				openExpression(barCode);
 			}
-		} );
+		});
 
 	}
 
-	private void openExpression( Text textControl )
-	{
-		String oldValue = textControl.getText( );
+	private void openExpression(Text textControl) {
+		String oldValue=textControl.getText();
 
-		ExpressionBuilder eb = new ExpressionBuilder( textControl.getShell( ),
-				oldValue );
-		eb.setExpressionProvier( new ExpressionProvider( barCodeItem.getModelHandle( ) ) );
+		ExpressionBuilder eb=new ExpressionBuilder(textControl.getShell(), oldValue);
+		eb.setExpressionProvier(new ExpressionProvider(barCodeItem.getModelHandle()));
 
-		String result = oldValue;
+		String result=oldValue;
 
-		if ( eb.open( ) == Window.OK )
-		{
-			result = eb.getResult( );
+		if (eb.open() == Window.OK) {
+			result=eb.getResult();
 		}
 
-		if ( !oldValue.equals( result ) )
-		{
-			textControl.setText( result );
+		if (!oldValue.equals(result)) {
+			textControl.setText(result);
 		}
 	}
 

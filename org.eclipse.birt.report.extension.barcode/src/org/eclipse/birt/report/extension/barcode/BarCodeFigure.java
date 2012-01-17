@@ -11,24 +11,25 @@
 
 package org.eclipse.birt.report.extension.barcode;
 
-import org.eclipse.birt.report.extension.barcode.util.SwtGraphicsUtil;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.eclipse.birt.report.extension.barcode.util.BarCodeGenerator;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.MouseEvent;
 import org.eclipse.draw2d.MouseListener;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 
 /**
  * RotatedTextFigure
  */
-public class BarCodeFigure extends Figure
-{
+public class BarCodeFigure extends Figure {
 
 	private String lastBarCode;
 	private String lastBarCodeType;
@@ -37,128 +38,88 @@ public class BarCodeFigure extends Figure
 
 	private BarCodeItem barCodeItem;
 
-	BarCodeFigure( BarCodeItem barCodeItem )
-	{
-		super( );
+	private final BarCodeGenerator barCodeGenerator=new BarCodeGenerator();
+	private static final Logger LOG=Logger.getLogger(BarCodeFigure.class.getName());
 
-		this.barCodeItem = barCodeItem;
+	BarCodeFigure(BarCodeItem barCodeItem) {
+		super();
 
-		addMouseListener( new MouseListener.Stub( ) {
+		this.barCodeItem=barCodeItem;
+
+		addMouseListener(new MouseListener.Stub() {
 
 			@Override
-			public void mousePressed( MouseEvent me )
-			{
-				if ( me.button == 2 )
-				{
+			public void mousePressed(MouseEvent me) {
+				if (me.button == 2) {
 					System.out.println("Button 2 Pressed");
 				}
 			}
-		} );
-	}
-
-	private int normalize( int angle )
-	{
-		angle = angle % 360;
-
-		if ( angle < 0 )
-		{
-			angle += 360;
-		}
-
-		return angle;
+		});
 	}
 
 	@Override
-	public Dimension getMinimumSize( int hint, int hint2 )
-	{
-		return getPreferredSize( hint, hint2 );
+	public Dimension getMinimumSize(int hint, int hint2) {
+		return getPreferredSize(hint, hint2);
 	}
 
 	@Override
-	public Dimension getPreferredSize( int hint, int hint2 )
-	{
-		Display display = Display.getCurrent( );
+	public Dimension getPreferredSize(int hint, int hint2) {
+		Display display=Display.getCurrent();
 
-		GC gc = null;
+		GC gc=null;
 
-		try
-		{
-			String barCode = barCodeItem.getBarCode( );
-			String barCodeType = barCodeItem.getBarCodeType();
+		try {
+			String barCode=barCodeItem.getBarCode();
+			String barCodeType=barCodeItem.getBarCodeType();
 
-			gc = new GC( display );
+			gc=new GC(display);
 
-			Point pt = gc.textExtent( barCode == null ? "" : barCode ); //$NON-NLS-1$
-
-			double[] info = SwtGraphicsUtil.computedRotatedInfo( pt.x,
-					pt.y,
-					0 );
-
-			if ( getBorder( ) != null )
-			{
-				Insets bdInsets = getBorder( ).getInsets( this );
-
-				return new Dimension( (int) info[0] + bdInsets.getWidth( ),
-						(int) info[1] + bdInsets.getHeight( ) );
-			}
-			return new Dimension( (int) info[0], (int) info[1] );
-		}
-		finally
-		{
-			if ( gc != null && !gc.isDisposed( ) )
-			{
-				gc.dispose( );
+			return new Dimension(hint, 30);
+		} finally {
+			if (gc != null && !gc.isDisposed()) {
+				gc.dispose();
 			}
 		}
 	}
 
 	@Override
-	protected void paintClientArea( Graphics graphics )
-	{
-		final Rectangle r = getClientArea( ).getCopy( );
+	protected void paintClientArea(Graphics graphics) {
+		final Rectangle r=getClientArea().getCopy();
 
-		String barCode = barCodeItem.getBarCode( );
-		String barCodeType = barCodeItem.getBarCodeType();
+		String barCode=barCodeItem.getBarCode();
+		String barCodeType=barCodeItem.getBarCodeType();
 
-		if ( barCode == null )
-		{
-			barCode = ""; //$NON-NLS-1$
+		if (barCode == null) {
+			barCode="";
 		}
 
-		if ( !barCode.equals( lastBarCode )
-				|| barCodeType != lastBarCodeType
-				|| cachedImage == null
-				|| cachedImage.isDisposed( ) )
-		{
-			lastBarCode = barCode;
-			lastBarCodeType = barCodeType;
+		if (!barCode.equals(lastBarCode) || barCodeType != lastBarCodeType || cachedImage == null || cachedImage.isDisposed()) {
+			lastBarCode=barCode;
+			lastBarCodeType=barCodeType;
 
-			if ( cachedImage != null && !cachedImage.isDisposed( ) )
-			{
-				cachedImage.dispose( );
+			if (cachedImage != null && !cachedImage.isDisposed()) {
+				cachedImage.dispose();
 			}
-
-			cachedImage = SwtGraphicsUtil.createRotatedTextImage( barCode,
-					0,
-					null );
+			Display display=Display.getCurrent();
+			try {
+				cachedImage=new Image(display, barCodeGenerator.generateBarCodeByteArray(barCodeType, barCode, 30));
+			} catch (IOException e) {
+				LOG.log(Level.SEVERE, "Error generating Barcode", e);
+			}
 		}
 
-		if ( cachedImage != null && !cachedImage.isDisposed( ) )
-		{
-			graphics.drawImage( cachedImage, r.x, r.y );
+		if (cachedImage != null && !cachedImage.isDisposed()) {
+			graphics.drawImage(cachedImage, r.x, r.y);
 		}
 	}
 
-	void setBarCodeItem( BarCodeItem item )
-	{
-		this.barCodeItem = item;
+	void setBarCodeItem(BarCodeItem item) {
+		this.barCodeItem=item;
 	}
 
-	void dispose( )
-	{
-		if ( cachedImage != null && !cachedImage.isDisposed( ) )
-		{
-			cachedImage.dispose( );
+	void dispose() {
+		if (cachedImage != null && !cachedImage.isDisposed()) {
+			cachedImage.dispose();
 		}
 	}
 }

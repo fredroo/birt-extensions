@@ -34,7 +34,6 @@
          <property
                canInherit="true"
                defaultDisplayName="BarCode Type"
-               defaultValue="BarCode"
                hasOwnModel="true"
                isEncryptable="false"
                isList="false"
