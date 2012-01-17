@@ -1,4 +1,4 @@
-package org.eclipse.birt.barcode;
+package org.eclipse.birt.report.extension.barcode;
 
 import org.eclipse.birt.report.model.api.ExtendedItemHandle;
 import org.eclipse.birt.report.model.api.activity.SemanticException;

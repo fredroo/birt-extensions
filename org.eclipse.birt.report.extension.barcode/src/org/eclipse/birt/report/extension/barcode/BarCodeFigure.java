@@ -9,9 +9,9 @@
  *  Actuate Corporation  - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.birt.barcode;
+package org.eclipse.birt.report.extension.barcode;
 
-import org.eclipse.birt.barcode.util.SwtGraphicsUtil;
+import org.eclipse.birt.report.extension.barcode.util.SwtGraphicsUtil;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.MouseEvent;

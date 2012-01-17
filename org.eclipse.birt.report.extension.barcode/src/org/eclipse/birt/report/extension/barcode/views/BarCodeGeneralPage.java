@@ -9,14 +9,14 @@
  *  Actuate Corporation  - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.birt.barcode.views;
+package org.eclipse.birt.report.extension.barcode.views;
 
 import java.util.List;
 
-import org.eclipse.birt.barcode.BarCodeItem;
 import org.eclipse.birt.report.designer.ui.dialogs.ExpressionBuilder;
 import org.eclipse.birt.report.designer.ui.dialogs.ExpressionProvider;
 import org.eclipse.birt.report.designer.ui.views.attributes.AttributesUtil;
+import org.eclipse.birt.report.extension.barcode.BarCodeItem;
 import org.eclipse.birt.report.model.api.ExtendedItemHandle;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;

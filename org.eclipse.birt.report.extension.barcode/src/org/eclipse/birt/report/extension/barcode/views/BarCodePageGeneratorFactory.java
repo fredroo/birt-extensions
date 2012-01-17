@@ -9,7 +9,7 @@
  *  Actuate Corporation  - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.birt.barcode.views;
+package org.eclipse.birt.report.extension.barcode.views;
 
 import org.eclipse.birt.report.designer.ui.views.IPageGenerator;
 import org.eclipse.core.runtime.IAdapterFactory;

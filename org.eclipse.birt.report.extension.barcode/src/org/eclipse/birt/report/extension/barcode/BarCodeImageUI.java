@@ -9,10 +9,10 @@
  *  Actuate Corporation  - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.birt.barcode;
+package org.eclipse.birt.report.extension.barcode;
 
-import org.eclipse.birt.barcode.util.SwtGraphicsUtil;
 import org.eclipse.birt.report.designer.ui.extensions.IReportItemImageProvider;
+import org.eclipse.birt.report.extension.barcode.util.SwtGraphicsUtil;
 import org.eclipse.birt.report.model.api.ExtendedItemHandle;
 import org.eclipse.birt.report.model.api.extension.ExtendedElementException;
 import org.eclipse.birt.report.model.api.extension.IReportItem;

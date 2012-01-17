@@ -1,4 +1,4 @@
-package org.eclipse.birt.barcode;
+package org.eclipse.birt.report.extension.barcode;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
@@ -9,10 +9,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 
-import org.eclipse.birt.barcode.util.SwingGraphicsUtil;
 import org.eclipse.birt.core.exception.BirtException;
 import org.eclipse.birt.report.engine.extension.IRowSet;
 import org.eclipse.birt.report.engine.extension.ReportItemPresentationBase;
+import org.eclipse.birt.report.extension.barcode.util.SwingGraphicsUtil;
 import org.eclipse.birt.report.model.api.ExtendedItemHandle;
 import org.eclipse.birt.report.model.api.extension.ExtendedElementException;
 

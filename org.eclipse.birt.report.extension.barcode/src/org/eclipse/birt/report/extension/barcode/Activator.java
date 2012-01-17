@@ -1,4 +1,4 @@
-package org.eclipse.birt.barcode;
+package org.eclipse.birt.report.extension.barcode;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

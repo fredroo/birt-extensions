@@ -9,7 +9,7 @@
  *  Actuate Corporation  - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.birt.barcode;
+package org.eclipse.birt.report.extension.barcode;
 
 import java.util.Arrays;
 import java.util.List;

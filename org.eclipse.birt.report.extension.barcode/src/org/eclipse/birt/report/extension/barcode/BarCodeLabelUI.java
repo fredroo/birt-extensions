@@ -1,4 +1,4 @@
-package org.eclipse.birt.barcode;
+package org.eclipse.birt.report.extension.barcode;
 
 import org.eclipse.birt.report.designer.ui.extensions.IReportItemLabelProvider;
 import org.eclipse.birt.report.model.api.ExtendedItemHandle;
