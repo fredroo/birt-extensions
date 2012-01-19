@@ -11,9 +11,6 @@
 
 package org.eclipse.birt.report.extension.barcode;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.birt.report.designer.ui.dialogs.ExpressionBuilder;
 import org.eclipse.birt.report.designer.ui.dialogs.ExpressionProvider;
 import org.eclipse.birt.report.designer.ui.extensions.ReportItemBuilderUI;
@@ -22,6 +19,11 @@ import org.eclipse.birt.report.model.api.ExtendedItemHandle;
 import org.eclipse.birt.report.model.api.extension.IReportItem;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TrayDialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -29,7 +31,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -68,11 +69,11 @@ class BarCodeEditor extends TrayDialog {
 	protected BarCodeItem barCodeItem;
 
 	protected Text barCode;
-	protected Combo barCodeType;
+	protected ComboViewer barCodeType;
 
-	private static final List<String> BAR_CODE_TYPES=Arrays.asList(BarCodeGenerator.INTERLEAVED, BarCodeGenerator.ITF_14, BarCodeGenerator.CODABAR,
-			BarCodeGenerator.CODE_39, BarCodeGenerator.CODE_128, BarCodeGenerator.UPC_A, BarCodeGenerator.UPC_E, BarCodeGenerator.EAN_13,
-			BarCodeGenerator.EAN_8, BarCodeGenerator.POSTNET, BarCodeGenerator.DATAMATRIX_SQUARE, BarCodeGenerator.DATAMATRIX_RECTANGULAR);
+	//	private static final List<String> BAR_CODE_TYPES=Arrays.asList(BarCodeGenerator.INTERLEAVED, BarCodeGenerator.ITF_14, BarCodeGenerator.CODABAR,
+	//			BarCodeGenerator.CODE_39, BarCodeGenerator.CODE_128, BarCodeGenerator.UPC_A, BarCodeGenerator.UPC_E, BarCodeGenerator.EAN_13,
+	//			BarCodeGenerator.EAN_8, BarCodeGenerator.POSTNET, BarCodeGenerator.DATAMATRIX_SQUARE, BarCodeGenerator.DATAMATRIX_RECTANGULAR);
 
 	protected BarCodeEditor(Shell shell, BarCodeItem barCodeItem) {
 		super(shell);
@@ -113,14 +114,22 @@ class BarCodeEditor extends TrayDialog {
 		Label lb=new Label(composite, SWT.None);
 		lb.setText("Barcode Type:"); //$NON-NLS-1$
 
-		barCodeType=new Combo(composite, SWT.DROP_DOWN | SWT.BORDER);
-		barCodeType.add("");
-		for (String bcType : BAR_CODE_TYPES) {
-			barCodeType.add(bcType);
-		}
+		barCodeType=new ComboViewer(composite, SWT.DROP_DOWN | SWT.BORDER | SWT.READ_ONLY);
+		//		barCodeType.add("");
+		//		for (String bcType : BAR_CODE_TYPES) {
+		//			barCodeType.add(bcType);
+		//		}
+		barCodeType.setContentProvider(ArrayContentProvider.getInstance());
+		barCodeType.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(Object element) {
+				return ((BarCodeGenerator) element).getLabel();
+			}
+		});
+		barCodeType.setInput(BarCodeGenerator.values());
 		GridData gd=new GridData();
 		gd.widthHint=100;
-		barCodeType.setLayoutData(gd);
+		barCodeType.getControl().setLayoutData(gd);
 
 		applyDialogFont(composite);
 
@@ -131,7 +140,7 @@ class BarCodeEditor extends TrayDialog {
 
 	private void initValues() {
 		barCode.setText(barCodeItem.getBarCode());
-		barCodeType.setText(barCodeItem.getBarCodeType() != null ? barCodeItem.getBarCodeType() : "");
+		barCodeType.setSelection(new StructuredSelection(BarCodeGenerator.CODABAR));//barCodeItem.getBarCodeType() != null ? barCodeItem.getBarCodeType() : "");
 	}
 
 	@Override
@@ -139,7 +148,7 @@ class BarCodeEditor extends TrayDialog {
 
 		try {
 			barCodeItem.setBarCode(barCode.getText());
-			barCodeItem.setBarCodeType(barCodeType.getText());
+			barCodeItem.setBarCodeType((BarCodeGenerator) ((IStructuredSelection) barCodeType.getSelection()).getFirstElement());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

@@ -232,7 +232,8 @@ public class BarCodeGeneralPage extends AttributesUtil.PageWrapper
 			{
 				if ( BarCodeItem.BAR_CODE_TYPE_PROP.equals( prop ) )
 				{
-					item.setBarCodeType( txtAngle.getText( ) );
+					// TODO
+					//					item.setBarCodeType( txtAngle.getText( ) );
 				}
 				else if ( BarCodeItem.BAR_CODE.equals( prop ) )
 				{

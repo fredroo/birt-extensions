@@ -11,61 +11,67 @@
 
 package org.eclipse.birt.report.extension.barcode;
 
-import org.eclipse.birt.report.designer.ui.extensions.ReportItemFigureProvider;
+import org.eclipse.birt.report.extension.common.CommonFigure;
+import org.eclipse.birt.report.extension.common.CommonFigureUI;
 import org.eclipse.birt.report.model.api.ExtendedItemHandle;
 import org.eclipse.birt.report.model.api.extension.ExtendedElementException;
-import org.eclipse.birt.report.model.api.extension.IReportItem;
-import org.eclipse.draw2d.IFigure;
 
 /**
  * RotatedTextFigureUI
  */
-public class BarCodeFigureUI extends ReportItemFigureProvider
+public class BarCodeFigureUI extends CommonFigureUI
 {
 
+	//	@Override
+	//	public IFigure createFigure( ExtendedItemHandle handle )
+	//	{
+	//		try
+	//		{
+	//			IReportItem item = handle.getReportItem( );
+	//
+	//			if ( item instanceof BarCodeItem )
+	//			{
+	//				return new BarCodeFigure( (BarCodeItem) item );
+	//			}
+	//		}
+	//		catch ( ExtendedElementException e )
+	//		{
+	//			e.printStackTrace( );
+	//		}
+	//		return null;
+	//	}
+	//
+	//	@Override
+	//	public void updateFigure( ExtendedItemHandle handle, IFigure figure )
+	//	{
+	//		try
+	//		{
+	//			IReportItem item = handle.getReportItem( );
+	//
+	//			if ( item instanceof BarCodeItem )
+	//			{
+	//				BarCodeFigure fig = (BarCodeFigure) figure;
+	//
+	//				fig.setSize((int) DEUtil.convertoToPixel(handle.getWidth()), (int) DEUtil.convertoToPixel(handle.getHeight()));
+	//
+	//				fig.setBarCodeItem( (BarCodeItem) item );
+	//			}
+	//		}
+	//		catch ( ExtendedElementException e )
+	//		{
+	//			e.printStackTrace( );
+	//		}
+	//	}
+	//
+	//	@Override
+	//	public void disposeFigure( ExtendedItemHandle handle, IFigure figure )
+	//	{
+	//		( (BarCodeFigure) figure ).dispose( );
+	//	}
+
 	@Override
-	public IFigure createFigure( ExtendedItemHandle handle )
-	{
-		try
-		{
-			IReportItem item = handle.getReportItem( );
-
-			if ( item instanceof BarCodeItem )
-			{
-				return new BarCodeFigure( (BarCodeItem) item );
-			}
-		}
-		catch ( ExtendedElementException e )
-		{
-			e.printStackTrace( );
-		}
-		return null;
-	}
-
-	@Override
-	public void updateFigure( ExtendedItemHandle handle, IFigure figure )
-	{
-		try
-		{
-			IReportItem item = handle.getReportItem( );
-
-			if ( item instanceof BarCodeItem )
-			{
-				BarCodeFigure fig = (BarCodeFigure) figure;
-
-				fig.setBarCodeItem( (BarCodeItem) item );
-			}
-		}
-		catch ( ExtendedElementException e )
-		{
-			e.printStackTrace( );
-		}
-	}
-
-	@Override
-	public void disposeFigure( ExtendedItemHandle handle, IFigure figure )
-	{
-		( (BarCodeFigure) figure ).dispose( );
+	protected CommonFigure handle(ExtendedItemHandle handle) throws ExtendedElementException {
+		return new BarCodeFigure(handle);
 	}
 
 }

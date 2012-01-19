@@ -1,4 +1,4 @@
-package org.eclipse.birt.report.extension.barcode;
+package org.eclipse.birt.report.extension.common;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -6,18 +6,18 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends AbstractUIPlugin {
+public class CommonActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.birt.barcode"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.birt.report.extension.common"; //$NON-NLS-1$
 
 	// The shared instance
-	private static Activator plugin;
+	private static CommonActivator plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public CommonActivator() {
 	}
 
 	/*
@@ -43,7 +43,7 @@ public class Activator extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static CommonActivator getDefault() {
 		return plugin;
 	}
 
