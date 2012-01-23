@@ -96,6 +96,8 @@ public enum BarCodeGenerator {
 				return new Image(Display.getCurrent(), new ByteArrayInputStream(out.toByteArray()));
 			} catch (IOException e) {
 				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
 			}
 		}
 		return null;

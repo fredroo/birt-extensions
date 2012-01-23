@@ -33,7 +33,6 @@
             isNameRequired="false">
          <property
                canInherit="true"
-               defaultDisplayName="BarCode Type"
                hasOwnModel="true"
                isEncryptable="false"
                isList="false"
@@ -42,7 +41,6 @@
          </property>
          <property
                canInherit="true"
-               defaultValue="1234567890"
                hasOwnModel="true"
                isEncryptable="false"
                isList="false"

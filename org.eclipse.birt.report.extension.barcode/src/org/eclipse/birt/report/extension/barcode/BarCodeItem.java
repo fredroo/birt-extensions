@@ -9,7 +9,7 @@ public class BarCodeItem extends CommonItem
 {
 	public static final String EXTENSION_NAME=getExtensionName(BarCodeActivator.getDefault().getBundle()); //$NON-NLS-1$
 	public static final String BAR_CODE_TYPE_PROP = "barCodeType"; //$NON-NLS-1$
-	public static final String BAR_CODE = "barCode"; //$NON-NLS-1$
+	public static final String BAR_CODE_PROP = "barCode"; //$NON-NLS-1$
 
 	//	static {
 	//		Properties props=new Properties();
@@ -54,11 +54,11 @@ public class BarCodeItem extends CommonItem
 
 	public String getBarCode()
 	{
-		return modelHandle.getStringProperty( BAR_CODE );
+		return modelHandle.getStringProperty( BAR_CODE_PROP );
 	}
 
 	public void setBarCode( String value ) throws SemanticException
 	{
-		modelHandle.setProperty( BAR_CODE, value );
+		modelHandle.setProperty( BAR_CODE_PROP, value );
 	}
 }

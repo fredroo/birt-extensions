@@ -33,22 +33,20 @@
             isNameRequired="false">
          <property
                canInherit="true"
-               defaultDisplayName="BarCode Type"
-               defaultValue="BarCode"
                hasOwnModel="true"
                isEncryptable="false"
                isList="false"
-               name="barCodeType"
+               name="textRect"
                type="string">
          </property>
          <property
                canInherit="true"
-               defaultValue="1234567890"
+               defaultValue="10"
                hasOwnModel="true"
                isEncryptable="false"
                isList="false"
-               name="barCode"
-               type="string">
+               name="arcSize"
+               type="integer">
          </property>
       </reportItem>
    </extension>

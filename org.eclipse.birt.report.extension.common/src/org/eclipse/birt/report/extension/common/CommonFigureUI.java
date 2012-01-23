@@ -28,8 +28,6 @@ public abstract class CommonFigureUI extends ReportItemFigureProvider
 	{
 		try
 		{
-			//			IReportItem item = handle.getReportItem( );
-
 			return handle(handle);
 		}
 		catch ( ExtendedElementException e )
@@ -40,12 +38,6 @@ public abstract class CommonFigureUI extends ReportItemFigureProvider
 	}
 
 	protected abstract CommonFigure handle(ExtendedItemHandle handle) throws ExtendedElementException;
-
-	//		if ( item instanceof RectangleItem )
-	//		{
-	//			return new RectangleFigure( (RectangleItem) item );
-	//		}
-	//	}
 
 	@Override
 	public void updateFigure( ExtendedItemHandle handle, IFigure figure )
@@ -59,12 +51,6 @@ public abstract class CommonFigureUI extends ReportItemFigureProvider
 				CommonFigure fig=(CommonFigure) figure;
 
 				fig.setExtendedItemHandle(handle);
-				//				fig.setSize(ExtendedItemHandleUtil.getDimension(handle));
-				//
-				//				fig.setFont(ExtendedItemHandleUtil.getFont(handle));
-				//
-				//				fig.setItem((CommonItem) item);
-				//				fig.setBarCodeItem( (RectangleItem) item );
 			}
 		}
 		catch ( ExtendedElementException e )

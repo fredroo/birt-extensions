@@ -16,68 +16,10 @@ import org.eclipse.birt.report.extension.common.CommonFigureUI;
 import org.eclipse.birt.report.model.api.ExtendedItemHandle;
 import org.eclipse.birt.report.model.api.extension.ExtendedElementException;
 
-/**
- * RotatedTextFigureUI
- */
 public class RectangleFigureUI extends CommonFigureUI
 {
-	//	@Override
-	//	public IFigure createFigure( ExtendedItemHandle handle )
-	//	{
-	//		try
-	//		{
-	//			IReportItem item = handle.getReportItem( );
-	//
-	//			if ( item instanceof RectangleItem )
-	//			{
-	//				return new RectangleFigure( (RectangleItem) item );
-	//			}
-	//		}
-	//		catch ( ExtendedElementException e )
-	//		{
-	//			e.printStackTrace( );
-	//		}
-	//		return null;
-	//	}
-	//
-	//	@Override
-	//	public void updateFigure( ExtendedItemHandle handle, IFigure figure )
-	//	{
-	//		try
-	//		{
-	//			IReportItem item = handle.getReportItem( );
-	//
-	//			if ( item instanceof RectangleItem )
-	//			{
-	//				RectangleFigure fig = (RectangleFigure) figure;
-	//
-	//				fig.setSize((int) DEUtil.convertoToPixel(handle.getWidth()), (int) DEUtil.convertoToPixel(handle.getHeight()));
-	//
-	//				fig.setFont(UIUtil.getFont(handle));
-	//
-	//				fig.setBarCodeItem( (RectangleItem) item );
-	//			}
-	//		}
-	//		catch ( ExtendedElementException e )
-	//		{
-	//			e.printStackTrace( );
-	//		}
-	//	}
-	//
-	//	@Override
-	//	public void disposeFigure( ExtendedItemHandle handle, IFigure figure )
-	//	{
-	//		( (RectangleFigure) figure ).dispose( );
-	//	}
-
 	@Override
 	protected CommonFigure handle(ExtendedItemHandle handle) throws ExtendedElementException {
-		//		IReportItem item=handle.getReportItem();
-		//		if (item instanceof RectangleItem)
-		//		{
-		//			return new RectangleFigure((RectangleItem) item);
-		//		}
 		return new RectangleFigure(handle);
 	}
-
 }

@@ -24,33 +24,16 @@ import org.eclipse.swt.graphics.Image;
  */
 public abstract class CommonFigure extends ReportElementFigure {
 
-	//	private String lastBarCode;
-	//	private String lastBarCodeType;
-
 	private Image cachedImage;
 
-	//	private final RectangleItem barCodeItem;
-	//	private int height;
 	private int lastWidth;
 	private int lastHeight;
-
-	//	private final CommonItem item;
 
 	private ExtendedItemHandle handle;
 
 	protected CommonFigure(ExtendedItemHandle handle) {
 		this.handle=handle;
-		//		super();
-		//
-		//		this.barCodeItem=barCodeItem;
-		//		this.item=item;
 	}
-
-	//	@Override
-	//	public void setSize(int w, int h) {
-	//		height=h;
-	//		super.setSize(w, h);
-	//	}
 
 	@Override
 	public Dimension getPreferredSize(int wHint, int hHint) {
@@ -68,12 +51,6 @@ public abstract class CommonFigure extends ReportElementFigure {
 	@Override
 	protected void paintFigure(Graphics graphics) {
 		final Rectangle r=getClientArea().getCopy();
-
-		//		String barCode=barCodeItem.getBarCode();
-		//		String barCodeType=barCodeItem.getBarCodeType();
-		//
-		//		if (barCode == null)
-		//			barCode=""; //$NON-NLS-1$
 
 		if (hasChanged() /* !barCode.equals(lastBarCode) || barCodeType != lastBarCodeType */|| lastWidth != getSize().width || lastHeight != getSize().height
 				|| cachedImage == null || cachedImage.isDisposed()) {
@@ -105,24 +82,12 @@ public abstract class CommonFigure extends ReportElementFigure {
 
 	protected abstract boolean hasChanged();
 
-	//	private Dimension shrink(Dimension size, Insets insets) {
-	//		return size.shrink(insets.getWidth(), insets.getHeight());
-	//	}
-
-	//	void setBarCodeItem(RectangleItem item) {
-	//		this.barCodeItem=item;
-	//	}
-
 	void dispose() {
 		if (cachedImage != null && !cachedImage.isDisposed()) {
 			cachedImage.dispose();
 		}
 	}
 
-	//	public void setItem(CommonItem item) {
-	//		this.item=item;
-	//	}
-	//
 	public CommonItem getItem() {
 		try {
 			return (CommonItem) handle.getReportItem();
