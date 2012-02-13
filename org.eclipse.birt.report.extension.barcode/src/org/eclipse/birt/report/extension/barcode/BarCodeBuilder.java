@@ -16,6 +16,7 @@ import org.eclipse.birt.report.designer.ui.dialogs.ExpressionProvider;
 import org.eclipse.birt.report.designer.ui.extensions.ReportItemBuilderUI;
 import org.eclipse.birt.report.extension.barcode.util.BarCodeGenerator;
 import org.eclipse.birt.report.model.api.ExtendedItemHandle;
+import org.eclipse.birt.report.model.api.activity.SemanticException;
 import org.eclipse.birt.report.model.api.extension.IReportItem;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TrayDialog;
@@ -133,12 +134,20 @@ class BarCodeEditor extends TrayDialog {
 
 		applyDialogFont(composite);
 
-		initValues();
+		try {
+			initValues();
+		} catch (SemanticException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return composite;
 	}
 
-	private void initValues() {
+	private void initValues() throws SemanticException {
+		if (barCodeItem.getBarCode()==null) {
+			barCodeItem.setBarCode("1234567890");
+		}
 		barCode.setText(barCodeItem.getBarCode());
 		barCodeType.setSelection(new StructuredSelection(BarCodeGenerator.CODABAR));//barCodeItem.getBarCodeType() != null ? barCodeItem.getBarCodeType() : "");
 	}
