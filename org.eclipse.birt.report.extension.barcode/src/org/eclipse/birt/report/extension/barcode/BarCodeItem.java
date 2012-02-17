@@ -11,36 +11,9 @@ public class BarCodeItem extends CommonItem
 	public static final String BAR_CODE_TYPE_PROP = "barCodeType"; //$NON-NLS-1$
 	public static final String BAR_CODE_PROP = "barCode"; //$NON-NLS-1$
 
-	//	static {
-	//		Properties props=new Properties();
-	//		InputStream stream=null;
-	//		try {
-	//			URL url=BarCodeActivator.getDefault().getBundle().getResource("plugin.properties");
-	//			stream=url.openStream();
-	//			props.load(stream);
-	//		} catch (IOException e) {
-	//			e.printStackTrace();
-	//		} finally {
-	//			if (stream != null)
-	//				try {
-	//					stream.close();
-	//				} catch (IOException e) {
-	//					e.printStackTrace();
-	//				}
-	//		}
-	//		EXTENSION_NAME=props.getProperty("extension.name", "");
-	//	}
-	//
-	//	private final ExtendedItemHandle modelHandle;
-
 	public BarCodeItem( ExtendedItemHandle modelHandle ) {
 		super(modelHandle);
 	}
-
-	//	public ExtendedItemHandle getModelHandle( )
-	//	{
-	//		return modelHandle;
-	//	}
 
 	public BarCodeGenerator getBarCodeType()
 	{

@@ -5,8 +5,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
+import org.eclipse.birt.report.designer.ui.preferences.DateSetPreferencePage;
+import org.eclipse.birt.report.model.api.DataSetHandle;
 import org.eclipse.birt.report.model.api.ExtendedItemHandle;
+import org.eclipse.birt.report.model.api.ReportItemHandle;
 import org.eclipse.birt.report.model.api.extension.ReportItem;
+import org.eclipse.birt.report.model.elements.interfaces.IReportItemModel;
 import org.osgi.framework.Bundle;
 
 public class CommonItem extends ReportItem
@@ -40,5 +44,9 @@ public class CommonItem extends ReportItem
 	public ExtendedItemHandle getModelHandle( )
 	{
 		return modelHandle;
+	}
+	
+	public DataSetHandle getDataSet() {
+		return modelHandle.getDataSet();
 	}
 }
