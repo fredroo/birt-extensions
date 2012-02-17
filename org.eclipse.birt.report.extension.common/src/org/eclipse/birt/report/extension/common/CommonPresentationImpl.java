@@ -18,22 +18,17 @@ public abstract class CommonPresentationImpl extends ReportItemPresentationBase 
 	private ExtendedItemHandle modelHandle;
 
 	@Override
-	public void setModelObject( ExtendedItemHandle modelHandle )
-	{
+	public void setModelObject(ExtendedItemHandle modelHandle) {
 		this.modelHandle=modelHandle;
-		try
-		{
+		try {
 			commonItem=(CommonItem) modelHandle.getReportItem();
-		}
-		catch ( ExtendedElementException e )
-		{
-			e.printStackTrace( );
+		} catch (ExtendedElementException e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public int getOutputType( )
-	{
+	public int getOutputType() {
 		return OUTPUT_AS_IMAGE;
 	}
 
@@ -41,13 +36,19 @@ public abstract class CommonPresentationImpl extends ReportItemPresentationBase 
 	public Object onRowSets(IRowSet[] rowSets) throws BirtException {
 		if (commonItem == null)
 			return null;
-
+		evalueateExpression(commonItem, rowSets);
 		ImageLoader imageLoader=new ImageLoader();
-		imageLoader.data=new ImageData[] { createImage(modelHandle).getImageData() };
-		ByteArrayOutputStream baos=new ByteArrayOutputStream();
-		imageLoader.save(baos, SWT.IMAGE_PNG);
-		return new ByteArrayInputStream(baos.toByteArray());
+		if (createImage(modelHandle) != null) {
+			imageLoader.data=new ImageData[] { createImage(modelHandle).getImageData() };
+			ByteArrayOutputStream baos=new ByteArrayOutputStream();
+			imageLoader.save(baos, SWT.IMAGE_PNG);
+			return new ByteArrayInputStream(baos.toByteArray());
+		}
+		return null;
+		
 	}
 
 	protected abstract Image createImage(ExtendedItemHandle item) throws ExtendedElementException;
+
+	protected abstract void evalueateExpression(CommonItem commonItem, IRowSet[] rowSets) throws BirtException;
 }

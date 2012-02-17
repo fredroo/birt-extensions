@@ -72,6 +72,12 @@ public enum BarCodeGenerator {
 
 	public Image generateBarCodeByteArray(ExtendedItemHandle handle, Dimension dimension /* String barCode, float componentHeight */)
 			throws ExtendedElementException {
+		if (dimension.height <= 0) {
+			dimension.height = 60;
+		}
+		if (dimension.width <= 0) {
+			dimension.width = 100;
+		}
 		if (dimension.height > 0 && dimension.width > 0) {
 			try {
 				BarCodeItem item=(BarCodeItem) handle.getReportItem();
